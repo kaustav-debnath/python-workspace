@@ -3,8 +3,6 @@ import random
 word_to_guess = random.choice(word_list)
 print("Welcome to Hangman!")
 
-
-
 stages = [
      """
         -----
@@ -56,22 +54,14 @@ stages = [
         |
         -
     """,
-    
-    
-    
-    
-    
-   
 
 ]
 unguessed_word = "_" * len(word_to_guess)
 print(f"Word to Guess:{word_to_guess}\t{unguessed_word}")
 
-
 lives = 6
 game_over = False
 correct_guesses = []
-
 
 while not game_over:
     display = ""
