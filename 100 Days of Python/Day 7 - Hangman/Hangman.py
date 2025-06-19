@@ -2,111 +2,98 @@ word_list=['brave', 'dream', 'grace', 'heart', 'light', 'peace', 'truth', 'wisdo
 import random
 word_to_guess = random.choice(word_list)
 print("Welcome to Hangman!")
-# print("Word=>",word_to_guess)
-print(f"Word to Guess: "+"_" * len(word_to_guess))
-guessed_letters= []
-wrong_guessed_letters = []
-guessed_word = ""
-length_of_word = len(word_to_guess)
-wrong_guesses = 0
-def draw_hangman(guesses):
-    stages = [
-         """
-           -----
-           |   |
-           |
-           |
-           |
-           -
-        """,
-        """
-           -----
-           |   |
-           |   O
-           |
-           |
-           -
-        """,
-        """
-           -----
-           |   |
-           |   O
-           |   |
-           |
-           -
-        """,
-        """
-           -----
-           |   |
-           |   O
-           |  /|
-           |
-           -
-        """,
-        """
-           -----
-           |   |
-           |   O
-           |  /|\\
-           |
-           -
-        """,
-         """
-           -----
-           |   |
-           |   O
-           |  /|\\
-           |  /
-           -
-        """,
-        """
-           -----
-           |   |
-           |   O
-           |  /|\\
-           |  / \\
-           -
-        """
-        
-       
-    ]
-    return stages[guesses]
-def return_guessed_word(word_to_guess, guessed_list):
-    placeholder = ""
+
+
+
+stages = [
+     """
+        -----
+        |   |
+        |   O
+        |  /|\\
+        |  / \\
+        -
+    """,    
+    """
+        -----
+        |   |
+        |   O
+        |  /|\\
+        |  /
+        -
+    """,
+    """
+        -----
+        |   |
+        |   O
+        |  /|\\
+        |
+        -
+    """,
+    
+    """
+        -----
+        |   |
+        |   O
+        |  /|
+        |
+        -
+    """,
+    """
+        -----
+        |   |
+        |   O
+        |   |
+        |
+        -
+    """,
+    
+    """
+        -----
+        |   |
+        |   O
+        |
+        |
+        -
+    """,
+    
+    
+    
+    
+    
+   
+
+]
+unguessed_word = "_" * len(word_to_guess)
+print(f"Word to Guess:{word_to_guess}\t{unguessed_word}")
+
+
+lives = 6
+game_over = False
+correct_guesses = []
+
+
+while not game_over:
+    display = ""
+    guess = input("Guess a letter from the word:\t")
     for letter in word_to_guess:
-        if letter in guessed_list:
-            placeholder += letter
+        if letter == guess:
+            correct_guesses.append(letter)
+            display += letter
+        elif letter in correct_guesses:
+            display += letter
         else:
-            placeholder += "_"
-    # print('placeholder==>',placeholder)
-    return placeholder
+            display += "_"
+    if guess not in word_to_guess:
+        print(f"You Guessed {guess}, that's a wrong guess, so you lose a life!")
+        lives -= 1
+        if lives == 0:
+            game_over = True
+            print("Game Over, You Lose!")
+    print(f"Guessed Word:\t{display}")
+    print(f"You have {lives} attempts left!\n{stages[lives]}")
 
-while wrong_guesses < 6 and guessed_word != word_to_guess:
+    if "_" not in display:
+        game_over = True
+        print("You Win!")
 
-    guess = input("Guess a letter: ").lower()
-    
-
-    if guess in word_to_guess:
-        print(f"Your guessed letter '{guess}' is in the word.")
-        guessed_letters.append(guess)
-        # guessed_word = "".join([letter if letter in guessed_letters else "_" for letter in word_to_guess])  
-        guessed_word = return_guessed_word(word_to_guess,guessed_letters)
-    else:
-        print(f"Sorry, the letter '{guess}' is not in the word.")
-        
-        wrong_guessed_letters.append(guess)
-        wrong_guesses += 1
-        print(f"Wrongly Guessed letters: {wrong_guessed_letters} and you have {6 - wrong_guesses} attempts left!")
-        print(draw_hangman(wrong_guesses))
-    if guessed_word == "":
-        print("You haven't guessed any letters yet.")
-    elif guessed_word == word_to_guess:
-        print(f"\nCongratulations! You've guessed the word: {word_to_guess.upper()}")
-        break
-    elif wrong_guesses == 6:
-        print(f"\nSorry you have lost the game! The correct word was {word_to_guess.upper()}")
-        break
-    else:
-        print(f"\nWord guessed so far: {guessed_word}")
-    length_of_word -= 1
-    
