@@ -56,8 +56,8 @@ def play_game():
         random_choice_b = fetch_game_data(data, random_choice_a)
         print(f"Compare A: {random_choice_a['name']},a {random_choice_a['description']}, from {random_choice_a['country']}")
         print(vs)
-        print(f"Compare B: {random_choice_b['name']},a {random_choice_b['description']}, from {random_choice_b['country']}")
-        user_choice = input("Who has more followers? Type 'A' or 'B': ").starip().upper()
+        print(f"Against B: {random_choice_b['name']},a {random_choice_b['description']}, from {random_choice_b['country']}")
+        user_choice = input("Who has more followers? Type 'A' or 'B': ").strip().upper()
         winning_user = compare_users(random_choice_a, random_choice_b)
         DID_USER_WIN = check_user_response(user_choice, random_choice_a, random_choice_b, winning_user)
         if DID_USER_WIN:
